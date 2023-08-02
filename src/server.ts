@@ -7,13 +7,20 @@ const app = express();
 const serverStartDate = new Date();
 let serverHitCount = 0;
 
+let routes :string[] =[];
+
+
 app.get("/", (req, res) => {
+  const history = "/"
+  routes.push(history)
   res.send(
     "This is the default path - and it isn't very interesting, sorry. \nTry visiting localhost:4000/creation-time, localhost:4000/current-time"
   );
 });
 
 app.get("/creation-time", (req, res) => {
+  const history = "/creation-time"
+  routes.push(history)
   res.json({
     message: `The server was started at ${serverStartDate.toTimeString()}`,
     utc: serverStartDate.toUTCString(),
@@ -23,7 +30,8 @@ app.get("/creation-time", (req, res) => {
 
 app.get("/current-time", (req, res) => {
   const dateOfRequestHandling = new Date();
-
+  const history = "/current-time"
+  routes.push(history)
   res.json({
     message: `The current date is ${dateOfRequestHandling.toTimeString()}`,
     utc: dateOfRequestHandling.toUTCString(),
@@ -32,6 +40,8 @@ app.get("/current-time", (req, res) => {
 });
 
 app.get("/hits", (req, res) => {
+  const history = "/hits";
+  routes.push(history)
   serverHitCount += 1;
   res.json({
     note: "We've registered your hit!",
@@ -41,6 +51,8 @@ app.get("/hits", (req, res) => {
 });
 
 app.get("/hits-stealth", (req, res) => {
+  const history = "/hits-stealth"
+  routes.push(history)
   res.json({
     note: "Oooh, you ninja. We didn't count that hit.",
     currentTotal: serverHitCount,
@@ -49,6 +61,8 @@ app.get("/hits-stealth", (req, res) => {
 });
 
 app.get("/ponies", (req, res) => {
+  const history = "/ponies"
+  routes.push(history)
   res.json({
     message: "Loaded dummy JSON data:",
     data: ponyData,
@@ -57,6 +71,8 @@ app.get("/ponies", (req, res) => {
 });
 
 app.get("/season-one", (req, res) => {
+  const history = "/season-one"
+  routes.push(history)
   res.json({
     countedAsHit: false,
     data: seasonOneEpisodes,
@@ -64,12 +80,44 @@ app.get("/season-one", (req, res) => {
 });
 
 app.get("/season-one/random", (req, res) => {
+  const history = "/season-one/random"
+  routes.push(history)
   const randomEpisode = pickRandom(seasonOneEpisodes);
   res.json({
     countedAsHit: false,
     data: randomEpisode,
   });
 });
+
+app.get("/hello-world",(req,res)=>{
+  const history = "/hello-world"
+  routes.push(history)
+  res.json({
+    "english": "Hello world!",
+    "esperanto": "Saluton mondo!",
+    "hawaiian": "Aloha Honua",
+    "turkish": "Merhaba Dünya!"
+  });
+});
+
+app.get("/ponies/random",(req,res)=>{
+  const history = "/ponies/random"
+  routes.push(history)
+  const randomPonies = pickRandom(ponyData.members);
+  res.json({
+    countedAsHit: false,
+    data: randomPonies,
+  });
+})
+
+
+app.get("/history",(req,res)=>{
+  const history = "/history"
+  routes.push(history)
+  res.json({
+    routes,
+  });
+})
 
 // using 4000 by convention, but could be changed
 const PORT_NUMBER = 4000;
