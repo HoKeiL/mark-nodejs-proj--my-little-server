@@ -7,7 +7,7 @@ const app = express();
 const serverStartDate = new Date();
 let serverHitCount = 0;
 
-let routes :string[] =[];
+let routes: string[] = [];
 
 
 app.get("/", (req, res) => {
@@ -89,7 +89,7 @@ app.get("/season-one/random", (req, res) => {
   });
 });
 
-app.get("/hello-world",(req,res)=>{
+app.get("/hello-world", (req, res) => {
   const history = "/hello-world"
   routes.push(history)
   res.json({
@@ -100,7 +100,7 @@ app.get("/hello-world",(req,res)=>{
   });
 });
 
-app.get("/ponies/random",(req,res)=>{
+app.get("/ponies/random", (req, res) => {
   const history = "/ponies/random"
   routes.push(history)
   const randomPonies = pickRandom(ponyData.members);
@@ -111,7 +111,7 @@ app.get("/ponies/random",(req,res)=>{
 })
 
 
-app.get("/history",(req,res)=>{
+app.get("/history", (req, res) => {
   const history = "/history"
   routes.push(history)
   res.json({
